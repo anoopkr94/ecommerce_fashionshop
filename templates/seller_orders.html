@@ -1,0 +1,30 @@
+{% extends 'seller_base.html' %}
+{% block title %}orders{% endblock %}
+{% load static %}
+{% block body %}
+<h2 align="center">View Items</h2>
+<table align="center" border="5" width="1500">
+    <tr><th>ORDE ID</th><th>USER</th><th>PRODUCT NAME</th><th>PHOTO</th><th>QTY</th><th>PRICE</th><th>TOTAL</th><th>status</th></tr>
+{% for i in data %}
+    <tr>
+        <td>{{i.order_id}}</td>
+        <td>{{i.user}}</td>
+        <td>{{i.name}}</td>
+        <td><img src="{{i.image.url}}" width="100" height="100"></td>
+        <td>{{i.qty}}</td>
+        <td>{{i.price}}</td>
+        <td>{{i.total}}</td>
+        <td>{{i.status}}</td>
+        <td><form method="post" action="../sellers/order_status,{{i.id}}">{% csrf_token %}
+            <select class="form-control" id="status" name="status">
+                                <option>acepted</option>
+                                <option>packed</option>
+                                <option>shipped</option>
+                                <option>deliverd</option>
+                                <option>return acepted</option>
+                                <option>refunded</option>
+                            </select> <button type="submit" >Update Status</button></form></td></tr>
+{% endfor %}
+
+</table>
+{% endblock %}

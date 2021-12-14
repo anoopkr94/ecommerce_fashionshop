@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% block title %}Product{% endblock %}
+{% load static %}
+{% block body %}
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text product-more">
+                        <a href="../home"><i class="fa fa-home"></i> Home</a>
+                        <a href="../shop">Shop</a>
+                        {% for i in data %}
+                        <span>{{i.brand}}/{{i.name}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
+
+    <!-- Product Shop Section Begin -->
+    <section class="product-shop spad page-details">
+        <div class="container">
+            <div class="row">
+
+
+
+
+                <div class="col-lg-9">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="product-pic-zoom">
+                                <img class="product-big-img" src="{{i.image.url}}" alt="">
+                                <div class="zoom-icon">
+                                    <i class="fa fa-search-plus"></i>
+                                </div>
+                            </div>
+                            <div class="product-thumbs">
+                                <div class="product-thumbs-track ps-slider owl-carousel">
+                                    <div class="pt active" data-imgbigurl="{{i.image.url}}">
+                                        <img src="{{i.image.url}}" alt=""></div>
+                                    <div class="pt" data-imgbigurl="{{i.image1.url}}">
+                                        <img src="{{i.image1.url}}" alt=""></div>
+                                    <div class="pt" data-imgbigurl="{{i.image2.url}}">
+                                        <img src="{{i.image2.url}}" alt=""></div>
+                                    <div class="pt" data-imgbigurl="{{i.image3.url}}">
+                                        <img src="{{i.image3.url}}" alt=""></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="product-details">
+                                <div class="pd-title">
+                                    <span>{{i.brand}}</span>
+                                    <h3>{{i.name}}</h3>
+                                    <a href="../wishlist,{{i.id}}" class="heart-icon"><i class="icon_heart_alt"></i>
+                                    </a>
+                                </div>
+                                <div class="pd-rating">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <span>(5)</span>
+                                </div>
+                                <div class="pd-desc">
+                                    <p><{{i.discription}}></p>
+                                    <h4>₹{{i.price}}<span>MRP₹{{i.mrp}}</span></h4>
+                                </div>
+
+                                <div class="pd-size-choose">
+                                    {% for s in sizes %}
+                                    <div class="sc-item">
+                                         <a href="../product,{{s.id}}"><label>{{s.size}}</label></a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <ul class="pd-tags">
+                                    <li><span>SIZE</span>: {{i.size}}</li>
+                                </ul>
+
+                                <div class="quantity">
+                                    {% if i.stock < 1 %}
+                                    <a href="" class="primary-btn pd-cart">Out Of Stock</a>
+                                    {% else %}
+                                    <a href="../cart/addtocart/{{i.id}}" class="primary-btn pd-cart">Add To Cart</a>
+                                    {% endif %}
+                                </div>
+                                <ul class="pd-tags">
+                                    <li><span>CATEGORIES</span>: {{i.category}} {{i.type}}</li>
+                                </ul>
+                                <ul class="pd-tags">
+                                    <li><span>Services</span>:</li>
+                                    <li> 100% Original Products</li>
+                                    <li> 30 Day Return Policy</li>
+                                    <li>Cash on Delivery available</li>
+                                    <li>Sold By:<span>{{i.seller}}</span></li>
+                                </ul>
+                                <div class="pd-share">
+                                    <div class="pd-social">
+                                        <a href="#"><i class="ti-facebook"></i></a>
+                                        <a href="#"><i class="ti-twitter-alt"></i></a>
+                                        <a href="#"><i class="ti-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-tab">
+                        <div class="tab-item">
+                            <ul class="nav" role="tablist">
+                                <li>
+                                    <a class="active" data-toggle="tab" href="#tab-1" role="tab">DESCRIPTION</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
+                                </li>
+                                <li>
+                                    <a data-toggle="tab" href="#tab-3" role="tab">Customer Reviews ({{count}})</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-item-content">
+                            <div class="tab-content">
+                                <div class="tab-pane fade-in active" id="tab-1" role="tabpanel">
+                                    <div class="product-content">
+                                        <div class="row">
+                                            <div class="col-lg-7">
+                                                <h5>Introduction</h5>
+                                                <p>{{i.discription}} </p>
+
+                                            </div>
+                                            <div class="col-lg-5">
+                                                <img src="{{i.image.url}}" alt="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                                    <div class="specification-table">
+                                        <table>
+                                            <tr>
+                                                <td class="p-catagory">Customer Rating</td>
+                                                <td>
+                                                    <div class="pd-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                        <span>(5)</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-catagory">Price</td>
+                                                <td>
+                                                    <div class="p-price">₹{{i.price}}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-catagory">Availability</td>
+                                                <td>
+                                                    <div class="p-stock">{{i.stock}} in stock</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-catagory">Size</td>
+                                                <td>
+                                                    <div class="p-size">{{i.size}}</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-catagory">Color</td>
+                                                <td><span class="cs-color"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-catagory">Sku</td>
+
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                                    <div class="customer-review-option">
+                                        <h4>Comments</h4>
+                                        <div class="comment-option">
+                                            <div class="co-item">
+                                                {% for f in feed %}
+                                                <div class="avatar-text">
+                                                    <div class="at-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
+                                                    <h5>{{f.user}}<span>{{f.date}}</span></h5>
+
+                                                    <div class="at-reply">{{f.message}}</div>
+                                                </div>
+                                                {% endfor %}
+
+                                            </div>
+                                        </div>
+                                        <div class="personal-rating">
+                                            <h6>Your Ratind</h6>
+                                            <div class="rating">
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                                <i class="fa fa-star-o"></i>
+                                            </div>
+                                        </div>
+                                        <div class="leave-comment">
+                                            <h4>Leave A Comment</h4>
+                                            <form action="feedback" method="post" class="comment-form">{% csrf_token %}
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <textarea placeholder="Messages" name="msg"></textarea>
+                                                        <button type="submit" value="{{i.id}}" name="id" class="site-btn">Send message</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+    <!-- Product Shop Section End -->
+
+    <!-- Related Products Section End -->
+    <div class="related-products spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Related Products</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for i in related %}
+                <div class="col-lg-3 col-sm-6">
+                    <div class="product-item">
+                        <div class="pi-pic">
+                            <img src="{{i.image.url}}" alt="">
+                            <div class="sale">Sale</div>
+                            <div class="icon">
+                                <i class="icon_heart_alt"></i>
+                            </div>
+                            <ul>
+                                <li class="w-icon active"><a href="../cart/addtocart/{{i.id}}"><i class="icon_bag_alt"></i></a></li>
+                                <li class="quick-view"><a href="../product,{{i.id}}">+ Quick View</a></li>
+                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="pi-text">
+                            <div class="catagory-name">{{i.type}}</div>
+                            <a href="../cart/addtocart/{{i.id}}">
+                                <h5>{{i.name}}</h5>
+                            </a>
+                            <div class="product-price">
+                                {{i.price}}
+                                <span>{{i.price}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Related Products Section End -->
+{% endblock %}

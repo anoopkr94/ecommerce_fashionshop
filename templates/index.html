@@ -1,0 +1,315 @@
+
+{% extends 'base.html' %}
+{% block title %}home{% endblock %}
+{% load static %}
+{% block body %}
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    <!-- Hero Section Begin -->
+    <section class="hero-section">
+        <div class="hero-items owl-carousel">
+            <div class="single-hero-items set-bg" data-setbg="{% static 'img/hero-1.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <span>men,women,kids</span>
+                            <h1>Half Price Store</h1>
+                            <p>Get the best of fashion with 50% off</p>
+                            <a href="#" class="primary-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="off-card">
+                        <h2>Sale <span>50%</span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="single-hero-items set-bg" data-setbg="{% static 'img/hero-2.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <span>men,women,kids</span>
+                            <h1>Half Price Store</h1>
+                            <p>Get the best of fashion with 50% off</p>
+                            <a href="#" class="primary-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="off-card">
+                        <h2>Sale <span>50%</span></h2>
+                    </div>
+                </div>
+            </div>
+            <div class="single-hero-items set-bg" data-setbg="{% static 'img/hero-4.jpg' %}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5">
+                            <span>men,women,kids</span>
+                            <h1>Half Price Store</h1>
+                            <p>Get the best of fashion with 50% off</p>
+                            <a href="#" class="primary-btn">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="off-card">
+                        <h2>Sale <span>50%</span></h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Banner Section Begin -->
+    <div class="banner-section spad">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="single-banner">
+                        <img src="{% static 'img/banner-1.jpg' %}" alt="">
+
+                        <div class="inner-text">
+                            <a href="../products/1">
+                            <h4>Men’s</h4>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="single-banner">
+                        <img src="{% static 'img/banner-2.jpg' %}" alt="">
+                        <div class="inner-text">
+                            <a href="../products/2">
+                            <h4>Women’s</h4>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="single-banner">
+                        <img src="{% static 'img/banner-3.jpg' %}" alt="">
+                        <div class="inner-text">
+                            <a href="../products/3">
+                            <h4>Kid’s</h4>
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Banner Section End -->
+
+    <!-- Women Banner Section Begin -->
+    <section class="women-banner spad">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="product-large set-bg" data-setbg="{% static 'img/products/women-large.jpg' %}">
+                        <h2>Women’s</h2>
+                        <a href="../products/2">Discover More</a>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-1">
+                    <div class="filter-control">
+                        <ul>
+                            <li class="active">Clothings</li>
+                            <li>HandBag</li>
+                            <li>Shoes</li>
+                            <li>Accessories</li>
+                        </ul>
+                    </div>
+                    <div class="product-slider owl-carousel">
+                         {% for i in data|slice:":5" %}
+                         {% if i.category==women %}
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="{{i.image.url}}" alt="">
+                                        <div class="sale pp-sale">Sale</div>
+                                        <div class="icon">
+                                            <a href="wishlist,{{i.id}}"> <i class="icon_heart_alt"></i></a>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="../cart/addtocart/{{i.id}}"><i class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="../product,{{i.id}}">+ Quick View</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">{{i.product_type}}</div>
+                                        <a href="../product,{{i.id}}" name="show">
+                                            <h5>{{i.name}}</h5>
+                                        </a>
+                                        <div class="product-price">
+                                            ₹{{i.price}}
+                                            <span>MRP₹{{i.mrp}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Women Banner Section End -->
+
+    <!-- Deal Of The Week Section Begin-->
+    <section class="deal-of-week set-bg spad" data-setbg="{% static 'img/time-bg.jpg' %}">
+        <div class="container">
+            <div class="col-lg-6 text-center">
+                <div class="section-title">
+                    <h2>Deal Of The Week</h2>
+                    <p>This pair of sneakers from ADIDAS Originals is a must have in your
+                        casuals wardrobe as it will match fantastically with any of your fave casual emsembles! </p>
+                    <div class="product-price">
+                        ₹4009.00
+                        <span>/ Cashual Shoe</span>
+                    </div>
+                </div>
+                <div class="countdown-timer" id="countdown">
+                    <div class="cd-item">
+                        <span>56</span>
+                        <p>Days</p>
+                    </div>
+                    <div class="cd-item">
+                        <span>12</span>
+                        <p>Hrs</p>
+                    </div>
+                    <div class="cd-item">
+                        <span>40</span>
+                        <p>Mins</p>
+                    </div>
+                    <div class="cd-item">
+                        <span>52</span>
+                        <p>Secs</p>
+                    </div>
+                </div>
+                <a href="../product,3" class="primary-btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+    <!-- Deal Of The Week Section End -->
+
+    <!-- Man Banner Section Begin -->
+    <section class="man-banner spad">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="filter-control">
+                        <ul>
+                            <li >Clothings</li>
+                            <li>HandBag</li>
+                            <li>Shoes</li>
+                            <li>Accessories</li>
+                        </ul>
+                    </div>
+                    <div class="product-slider owl-carousel">
+                        {% for i in data|slice:":5" %}
+                        {% if i.category==men %}
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="{{i.image.url}}" alt="">
+                                        <div class="sale pp-sale">Sale</div>
+                                        <div class="icon">
+                                            <a href="wishlist,{{i.id}}"> <i class="icon_heart_alt"></i></a>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="../cart/addtocart/{{i.id}}"><i class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="../product,{{i.id}}">+ Quick View</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">{{i.product_type}}</div>
+                                        <a href="../product,{{i.id}}" name="show">
+                                            <h5>{{i.name}}</h5>
+                                        </a>
+                                        <div class="product-price">
+                                            ₹{{i.price}}
+                                            <span>MRP₹{{i.mrp}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-3 offset-lg-1">
+                    <div class="product-large set-bg m-large" data-setbg="{% static 'img/products/man-large.jpg' %}">
+                        <h2>Men’s</h2>
+                        <a href="mens">Discover More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Man Banner Section End -->
+    <!-- Deal Of The Week Section Begin-->
+    <section class="deal-of-week set-bg spad" data-setbg="{% static 'img/time-bg 1.jpg' %}">
+        <div class="container">
+            <div class="col-lg-6 text-center">
+                <div class="section-title">
+                    <h2>Deal Of The Day</h2>
+                    <p>Men Black Sear IDP Sneakers Puma Black-Silver_ Textile upper Cushioned footbed Textured and patterned outsole ₹3000/- off </p>
+                    <div class="product-price">
+                        ₹1299.00
+                        <span>/Cashual Shoe</span>
+                    </div>
+                </div>
+                <a href="../product,4" class="primary-btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+    <!-- Deal Of The Week Section End -->
+ <section class="women-banner spad">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="product-large set-bg" data-setbg="{% static 'img/products/kids-large.jpg' %}">
+                        <h2>Kid’s</h2>
+                        <a href="../kids">Discover More</a>
+                    </div>
+                </div>
+                <div class="col-lg-8 offset-lg-1">
+                    <div class="filter-control">
+                        <ul>
+                            <li>Clothings</li>
+                            <li>HandBag</li>
+                            <li>Shoes</li>
+                            <li>Accessories</li>
+                        </ul>
+                    </div>
+                    <div class="product-slider owl-carousel">
+                         {% for i in data|slice:":5" %}
+                         {% if i.category==kids %}
+                        <div class="product-item">
+                            <div class="pi-pic">
+                                <img src="{{i.image.url}}" alt="">
+                                        <div class="sale pp-sale">Sale</div>
+                                        <div class="icon">
+                                            <a href="wishlist,{{i.id}}"> <i class="icon_heart_alt"></i></a>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="../cart/addtocart/{{i.id}}"><i class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="../product,{{i.id}}">+ Quick View</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">{{i.product_type}}</div>
+                                        <a href="../product,{{i.id}}" name="show">
+                                            <h5>{{i.name}}</h5>
+                                        </a>
+                                        <div class="product-price">
+                                            ₹{{i.price}}
+                                            <span>MRP₹{{i.mrp}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

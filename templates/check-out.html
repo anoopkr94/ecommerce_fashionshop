@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Shop{% endblock %}
+{% load static %}
+{% block body %}
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text product-more">
+                        <a href="../home"><i class="fa fa-home"></i> Home</a>
+                        <a href="../shop">Shop</a>
+                        <span>Check Out</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
+
+    <!-- Shopping Cart Section Begin -->
+    <section class="checkout-section spad">
+        <div class="container">
+            <form action="placeorder" method="post" class="checkout-form">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4>Biiling Details</h4>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label for="fir">First Name<span>*</span></label>
+                                <input type="text" id="fir" name="fir">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="last">Last Name<span>*</span></label>
+                                <input type="text" id="last" name="last">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="street">Address<span>*</span></label>
+                                <input type="text" id="street" name="add" class="street-first">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="zip">Postcode / ZIP </label>
+                                <input type="number" id="zip" name="zip">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="town">Town / City<span>*</span></label>
+                                <input type="text" id="town" name="city">
+                            </div>
+                            <div class="col-lg-12">
+                                <label for="state">State<span>*</span></label>
+                                <input type="text" id="state" name="state">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="email">Email Address<span>*</span></label>
+                                <input type="text" id="email" name="email">
+                            </div>
+                            <div class="col-lg-6">
+                                <label for="phone">Phone<span>*</span></label>
+                                <input type="text" id="phone" name="phone">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="place-order">
+                            <h4>Your Order</h4>
+                            <div class="order-total">
+                                <ul class="order-table">
+                                    <li>Product <span>Total</span></li>
+                                    {% for i in data %}
+                                    <li class="fw-normal">{{i.name}} x {{i.qty}} <span>₹{{i.total}}</span></li>
+                                    {% endfor %}
+                                    <li class="fw-normal">Subtotal <span>₹{{gt}}</span></li>
+                                    <li class="total-price" >Total <span>₹{{gt}}</span></li>
+
+                                </ul>
+                                <div class="order-btn">
+                                    <button type="submit"  class="site-btn place-btn">Proceed Payments</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+{% endblock %}

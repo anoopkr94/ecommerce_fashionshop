@@ -1,0 +1,58 @@
+{% extends 'seller_base.html' %}
+{% block title %}Add items{% endblock %}
+
+{% block body %}
+<div class="register-login-section spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="register-form">
+                    <h2>ADD ITEMS</h2>
+                    <form id="add_item" method="post" action="../sellers/seller_add" data-type-url="{% url 'ajax_load_types' %}" >
+                        {% csrf_token %}
+                        <div class="group-input">
+                            {{form.as_p}}
+                            {{form_size.as_p}}
+                            <input type="submit" class="site-btn login-btn" >
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block scripts %}
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_category").change(function () {
+        const url = $("#add_item").attr("data-type-url");  // get the url of the `load_cities` view
+        const categoryId = $(this).val();  // get the selected category ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+                'category_id': categoryId       // add the category id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_cities` view function
+                $("#id_type").html(data);  // replace the contents of the type input with the data that came from the server
+                /*
+
+                let html_data = '<option value="">---------</option>';
+                data.forEach(function (type) {
+                    html_data += `<option value="${type.id}">${type.name}</option>`
+                });
+                console.log(html_data);
+                $("#id_type").html(html_data);
+
+                */
+            }
+        });
+
+    });
+
+</script>
+{% endblock %}
