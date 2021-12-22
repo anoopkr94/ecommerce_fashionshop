@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+    {% block style %}
+    <style>
+        input .razorpay-payment-button{
+            font-size: 25px;
+            background-color: blue;
+            border-radius: 5px;
+        
+            }
+            
+        </style>
+    {% endblock %}
+{% block body %}
+
+<div class="container mt-5">
+
+    <div class="row">
+        <div class="form-popup" >
+            <form action="../payment_status" method="POST">{% csrf_token %}
+                <script
+                        src="https://checkout.razorpay.com/v1/checkout.js"
+                        data-key="rzp_test_1zrWy3oPfp9cS1"
+                        data-amount="{{amount}}"
+                        data-currency="INR"
+                        data-order_id="{{order_id}}"
+                        data-buttontext="Pay with Razorpay"
+                        data-name="Fashion Shop"
+                        data-description="Explore Best fashion shopping experiance..."
+                        data-image="{% static 'images/logo.png' %}"
+                        data-prefill.name="{{request.user}}"
+                        data-prefill.email="{{user.email}}"
+                        data-theme.color="#F37254">
+                </script>
+                <input type="hidden" custom="Hidden Element" name="hidden">
+            </form>
+        </div>
+
+        
+
+    </div>
+</div>
+<br><br><br><br>
+
+{% endblock %}
+

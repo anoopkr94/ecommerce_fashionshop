@@ -1,59 +1,53 @@
-from django.shortcuts import render,redirect
-from .models import cartitem
-from shopping.models import products,wishlists
-from orders.models import order_details,order_items,payment
+from django.shortcuts import get_object_or_404, render,redirect
+from .models import cartitems
+from shopping.models import products
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 import datetime
 
-@login_required(login_url='login')
+@login_required(login_url='shopping:login')
 def addtocart(request,id):
-    if cartitem.objects.filter(pro_id=id,user=request.user).exists():
-        item=cartitem.objects.get(pro_id=id,user=request.user)
-        item.qty+=1
-        item.save()
-        item.total=item.price*item.qty
-        item.save()
-    else:
-        datas=products.objects.filter(id=id)
-        for data in datas:
-            product_id=data.id
-            name=data.name
-            image=data.image
-            seller=data.seller
-            price=data.price
-            total=price
-            a=cartitem(pro_id=product_id,name=name,image=image,seller=seller,user=request.user,price=price,total=total)
-            a.save()
-        messages.info(request, 'item added to cart')
-        return redirect('cart')
-    messages.info(request, 'cart updated')
-    return redirect('cart')
+    product = get_object_or_404(products, id=id)
+    orderitem, created = cartitems.objects.get_or_create(item=product,user=request.user)
 
-@login_required(login_url='login')
-def cart(request):
-    usr=request.user
-    data=cartitem.objects.filter(user=usr)
-    gt=0
-    for datas in data:
-        t=datas.total
-        gt=gt+t
-    return render(request,'shopping-cart.html',{'data':data,'gt':gt})
-def delete_cart(request,id):
-    cartitem.objects.filter(id=id,user=request.user).delete()
+    if cartitems.objects.filter(item__id=id, user=request.user).exists():
+        orderitem.quantity +=1
+        orderitem.save()
+    else:
+
+        cart=cartitems.objects.create(user=request.user)
+        cart.item.add(orderitem)
+    messages.info(request, 'cart item ADD')
+
+    return redirect("cart:cart")
+
+@login_required(login_url='shopping:login')
+def deletecartitem(request,id):
+    product = get_object_or_404(products, id=id)
+    cartitems.objects.filter(item=products, user=request.user).delete()
+
     messages.info(request, 'cart item deleted')
-    return redirect('cart')
-def delete_qty_cart(request,id):
-    if cartitem.objects.filter(pro_id=id,user=request.user).exists():
-        item=cartitem.objects.get(pro_id=id,user=request.user)
-        item.qty-=1
-        item.save()
-        item.total=item.price*item.qty
-        item.save()
-        if item.qty==0:
-            cartitem.objects.filter(id=item.id, user=request.user).delete()
-        messages.info(request, 'cart updated')
-        return redirect('cart')
-    messages.info(request, 'cart updated')
-    return redirect('cart')
-# Create your views here.
+    return redirect('cart:cart')
+
+
+def remove_cartitem_qty(request,id):
+    product = get_object_or_404(products, id=id)
+    orderitem = cartitems.objects.get(item=product, user=request.user)
+
+    if cartitems.objects.filter(item__id=product.id, user=request.user).exists():
+        orderitem.quantity -= 1
+        orderitem.save()
+        if orderitem.quantity==0:
+            cartitems.objects.filter(item=product, user=request.user).delete()
+
+    messages.info(request, 'cart item deleted')
+    return redirect('cart:cart')
+
+
+def cart(request):
+    data=cartitems.objects.filter(user=request.user)
+    gt=0
+    for i in data:
+        gt+=(i.item.price*i.quantity)
+
+    return render(request,"shopping-cart.html",{'items':data,'gt':gt})

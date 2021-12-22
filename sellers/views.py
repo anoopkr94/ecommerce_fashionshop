@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from shopping.models import products,category,type
-from orders.models import order_items
+from orders.models import order_item
 from .forms import add_item_form, add_type_form, add_size_form
 
 
@@ -26,7 +26,7 @@ def add_type(request):
 def order_status(request,id):
     if request.method=='POST':
         status=request.POST['status']
-        item = order_items.objects.get(id=id)
+        item = order_item.objects.get(id=id)
         item.status=status
         item.save()
         return redirect('seller_order')
@@ -36,14 +36,13 @@ def seller_add(request):
     form=add_item_form
     form_size=add_size_form
     if request.method == 'POST':
-        form1=add_item_form(request.POST)
+        form1=add_item_form(request.POST,request.FILES)
+        form2=add_size_form(request.POST)
         if form1.is_valid():
             form1.save()
-
         else:
-            print("!!!!!!!")
-        return redirect('seller_add')
-    return render(request,'seller_additems.html',{'form':form,'form_size':form_size})
+            print(form1.errors)
+    return render(request,'seller_additems.html',{'form':form})#,'form_size':form_size
 
 
 def seller_view(request):
@@ -59,7 +58,7 @@ def delete_item(request):
 
 def seller_order(request):
     user = request.user
-    data = order_items.objects.filter(seller=user)
+    data = order_item.objects.filter(seller=user)
     return render(request, 'seller_orders.html', {'data': data})
 # Create your views here.
 # AJAX

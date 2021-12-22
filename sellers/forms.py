@@ -1,5 +1,5 @@
 from django import forms
-from shopping.models import products, category, type, prod_size
+from shopping.models import products, category, type, size
 
 
 class add_type_form(forms.ModelForm):
@@ -9,7 +9,7 @@ class add_type_form(forms.ModelForm):
 
 class add_size_form(forms.ModelForm):
     class Meta:
-        model=prod_size
+        model=size
         fields=['size','stock']
 
 class add_item_form(forms.ModelForm):

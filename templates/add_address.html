@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <h2>Biiling Details</h2>
+                <form id="add_form" action="add_address" method="post" class="form-container">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label for="fir">First Name<span>*</span></label>
+                            <input class="form-control" type="text" id="fir" name="first_n">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="last">Last Name<span>*</span></label>
+                            <input class="form-control" type="text" id="last" name="last_n">
+                        </div>
+                        <div class="col-lg-12">
+                            <label for="address1">Address Line1<span>*</span></label>
+                            <input class="form-control" type="text" id="address1" name="address1">
+                        </div>
+                        <div class="col-lg-12">
+                            <label for="address2">Address Line2</label>
+                            <input class="form-control" type="text" id="address2" name="address2">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="zip">Postcode / ZIP </label>
+                            <input class="form-control" type="number" id="zip" name="zip">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="town">Town / City<span>*</span></label>
+                            <input class="form-control" type="text" id="town" name="city">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="state">State<span>*</span></label>
+                            <input class="form-control" type="text" id="state" name="state">
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="phone">Phone<span>*</span></label>
+                            <input class="form-control" type="text" id="phone" name="phone">
+                        </div>
+                        <div class="col-lg-12 ">
+                            <button form="add_form" class="cart-btn" style="width:100%">ADD ADDRESS</button>
+
+                        </div>
+                        <br><br><br>
+                        .
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

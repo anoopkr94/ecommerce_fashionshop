@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from shopping import views
-
+app_name='shopping'
 urlpatterns = [
     path('',views.index,name='index'),
     path('home', views.index, name='index'),
@@ -24,8 +24,8 @@ urlpatterns = [
     path('faq', views.faq, name='faq'),
     path('contact', views.contact, name='contact'),
     path('product,<int:id>', views.product, name='product'),
-    path('products/<int:id>', views.product_s, name='products'),
-    path('type_shop,<int:id>', views.type_shop, name='type_shop'),
+    path('products/<str:name>', views.product_s, name='products'),
+    path('type_shop,<str:name>', views.type_shop, name='type_shop'),
     path('wishlist,<int:id>',views.wishlist,name='wishlist'),
     path('search', views.search, name='search'),
     path('wishlist_view', views.wishlist_view, name='wishlist_view'),

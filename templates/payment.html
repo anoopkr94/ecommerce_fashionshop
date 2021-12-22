@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="container mt-5">
+
+    <div class="row">
+
+        <div class="col-sm-6 text-right">
+            <a href="cash_on_delivery/{{orders}}" class="btn btn-primary btn-lg">Cash On Delivery {{gt}}</a>
+        </div>
+        <div class="col-sm-6">
+            <a href="online_payment/{{orders}}" class="btn btn-primary btn-lg">Online Payment {{gt}}</a>
+        </div>
+
+    </div>
+</div>
+<br><br><br><br>
+
+{% endblock %}

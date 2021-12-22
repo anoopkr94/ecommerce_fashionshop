@@ -68,7 +68,7 @@
                         <img src="{% static 'img/banner-1.jpg' %}" alt="">
 
                         <div class="inner-text">
-                            <a href="../products/1">
+                            <a href="../products/men">
                             <h4>Men’s</h4>
                                 </a>
                         </div>
@@ -79,7 +79,7 @@
                     <div class="single-banner">
                         <img src="{% static 'img/banner-2.jpg' %}" alt="">
                         <div class="inner-text">
-                            <a href="../products/2">
+                            <a href="../products/women">
                             <h4>Women’s</h4>
                                 </a>
                         </div>
@@ -89,7 +89,7 @@
                     <div class="single-banner">
                         <img src="{% static 'img/banner-3.jpg' %}" alt="">
                         <div class="inner-text">
-                            <a href="../products/3">
+                            <a href="../products/kids">
                             <h4>Kid’s</h4>
                                 </a>
                         </div>
@@ -107,7 +107,7 @@
                 <div class="col-lg-3">
                     <div class="product-large set-bg" data-setbg="{% static 'img/products/women-large.jpg' %}">
                         <h2>Women’s</h2>
-                        <a href="../products/2">Discover More</a>
+                        <a href="../products/women">Discover More</a>
                     </div>
                 </div>
                 <div class="col-lg-8 offset-lg-1">
@@ -121,7 +121,8 @@
                     </div>
                     <div class="product-slider owl-carousel">
                          {% for i in data|slice:":5" %}
-                         {% if i.category==women %}
+                         {% if i.category.name in "Women" %}
+                    
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src="{{i.image.url}}" alt="">
@@ -146,6 +147,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
@@ -206,7 +208,8 @@
                     </div>
                     <div class="product-slider owl-carousel">
                         {% for i in data|slice:":5" %}
-                        {% if i.category==men %}
+                        {% if i.category.name in "Men" %}
+                     
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src="{{i.image.url}}" alt="">
@@ -231,13 +234,14 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
                 <div class="col-lg-3 offset-lg-1">
                     <div class="product-large set-bg m-large" data-setbg="{% static 'img/products/man-large.jpg' %}">
                         <h2>Men’s</h2>
-                        <a href="mens">Discover More</a>
+                        <a href="../products/men">Discover More</a>
                     </div>
                 </div>
             </div>
@@ -267,7 +271,7 @@
                 <div class="col-lg-3">
                     <div class="product-large set-bg" data-setbg="{% static 'img/products/kids-large.jpg' %}">
                         <h2>Kid’s</h2>
-                        <a href="../kids">Discover More</a>
+                        <a href="../products/kids">Discover More</a>
                     </div>
                 </div>
                 <div class="col-lg-8 offset-lg-1">
@@ -281,7 +285,8 @@
                     </div>
                     <div class="product-slider owl-carousel">
                          {% for i in data|slice:":5" %}
-                         {% if i.category==kids %}
+                         {% if i.category.name in "Kids" %}
+                   
                         <div class="product-item">
                             <div class="pi-pic">
                                 <img src="{{i.image.url}}" alt="">
@@ -306,10 +311,18 @@
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
             </div>
         </div>
     </section>
+{% endblock %}
+{% block script %}
+{% for message in messages %}
+<script>
+    alert('{{ message }}');
+</script>
+{% endfor %}
 {% endblock %}

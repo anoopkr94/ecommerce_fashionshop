@@ -1,11 +1,14 @@
 from django.db import models
-class cartitem(models.Model):
-    pro_id=models.IntegerField()
-    user=models.CharField(max_length=50)
-    name = models.CharField(max_length=50)
-    image = models.ImageField()
-    seller=models.CharField(max_length=20)
-    qty=models.PositiveIntegerField(default=1)
-    price=models.IntegerField()
-    total=models.DecimalField(default=0.00,decimal_places=2,max_digits=10)
-# Create your models here.
+from django.conf import settings
+from shopping.models import products
+
+class cartitems(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    item = models.ForeignKey(products, on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.username
+
+    def get_total_item_price(self):
+        return self.quantity * self.item.price

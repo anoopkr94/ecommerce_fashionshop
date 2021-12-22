@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import products, wishlists, feedback, category
+from .models import products, wishlists, feedback, category,size,type
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import datetime
@@ -21,29 +21,33 @@ def shop(request):
 #show product
 def product(request,id):
     data=products.objects.filter(id=id)
+    sizes=size.objects.filter(item_id=id)
     for datas in data:
         typ=datas.type
     related=products.objects.filter(type=typ)
-    feed=feedback.objects.filter(pro_id=id)
+    feed=feedback.objects.filter(product_id=id)
     count=0
     for i in feed:
         count+=1
-    return render(request,'product.html',{'data':data,'related':related,'feed':feed,'count':count})
+    return render(request,'product.html',{'data':data,'related':related,'feed':feed,'count':count,'sizes':sizes})
 #show category based view
-def product_s(request,id):
-    data = products.objects.filter(category_id=id)
+def product_s(request,name):
+    catName=category.objects.get(name__iexact=name)
+    data = products.objects.filter(category=catName)
     return render(request,'shop.html',{'data':data})
 
-def type_shop(request,id):
-    data = products.objects.filter(type=id)
+def type_shop(request,name):
+    typeName=type.objects.get(name__iexact=name)
+    data = products.objects.filter(type=typeName)
     return render(request,'shop.html',{'data':data})
 
 @login_required(login_url='login')
 def wishlist(request,id):
-    a = wishlists(product=id,user=request.user)
+    pid=products.objects.get(id=id)
+    a = wishlists(product=pid,user=request.user)
     a.save()
     messages.info(request, 'item added to wishlist')
-    return redirect('shop')
+    return redirect('shopping:shop')
 
 
 @login_required(login_url='login')
@@ -54,7 +58,7 @@ def wishlist_view(request):
 def delete_wishlist(request,id):
     wishlists.objects.filter(id=id,user=request.user).delete()
     messages.info(request, 'wishlist item deleted')
-    return redirect('wishlist_view')
+    return redirect('shopping:wishlist_view')
 
 def searchmatch(key,item):
     if key in item.name.lower() or key in item.brand.lower() or key in item.category.name.lower() or key in item.type.name.lower():
@@ -72,10 +76,11 @@ def feed(request):
 
     msg=request.POST['msg']
     id=request.POST['id']
+    product=products.objects.get(id=id)
 
-    f=feedback(message=msg,date=datetime.date.today(),product=id,user=request.user)
+    f=feedback(message=msg,date=datetime.date.today(),product=product,user=request.user)
     f.save()
-    return redirect('product',id)
+    return redirect('shopping:product',id)
 
 # Create your views here
 

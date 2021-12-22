@@ -82,7 +82,7 @@
                         <li class="cart-icon">
                             <a href="../cart/cart">
                                 <i class="icon_bag_alt"></i>
-                                <span>{{request.user|cart_item_counts}}</span>
+                                
                             </a>
                         </li>
 
@@ -268,5 +268,7 @@
 <script src="{% static 'js/jquery.slicknav.js' %}"></script>
 <script src="{% static 'js/owl.carousel.min.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
+{% block script %}
+{% endblock %}
 </body>
 </html>

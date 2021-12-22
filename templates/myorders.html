@@ -1,49 +1,73 @@
-{% extends 'base.html' %}
-{% block title %}My orders{% endblock %}
-{% load static %}
-{% block body %}
+{% extends 'base.html' %} {% block title %}My orders{% endblock %} {% load
+static %} {% block style %}
 <style>
-    ol.progtrckr {
+  ol.progtrckr {
     margin: 0;
     padding: 0;
-    list-style-type none;
-}
+    list-style-type: none;
+  }
 
-ol.progtrckr li {
+  ol.progtrckr li {
     display: inline-block;
     text-align: center;
     line-height: 3.5em;
-}
+  }
 
-ol.progtrckr[data-progtrckr-steps="2"] li { width: 49%; }
-ol.progtrckr[data-progtrckr-steps="3"] li { width: 33%; }
-ol.progtrckr[data-progtrckr-steps="4"] li { width: 24%; }
-ol.progtrckr[data-progtrckr-steps="5"] li { width: 19%; }
-ol.progtrckr[data-progtrckr-steps="6"] li { width: 16%; }
-ol.progtrckr[data-progtrckr-steps="7"] li { width: 14%; }
-ol.progtrckr[data-progtrckr-steps="8"] li { width: 12%; }
-ol.progtrckr[data-progtrckr-steps="9"] li { width: 11%; }
+  ol.progtrckr[data-progtrckr-steps="2"] li {
+    width: 49%;
+  }
 
-ol.progtrckr li.progtrckr-done {
+  ol.progtrckr[data-progtrckr-steps="3"] li {
+    width: 33%;
+  }
+
+  ol.progtrckr[data-progtrckr-steps="4"] li {
+    width: 24%;
+  }
+
+  ol.progtrckr[data-progtrckr-steps="5"] li {
+    width: 19%;
+  }
+
+  ol.progtrckr[data-progtrckr-steps="6"] li {
+    width: 16%;
+  }
+
+  ol.progtrckr[data-progtrckr-steps="7"] li {
+    width: 14%;
+  }
+
+  ol.progtrckr[data-progtrckr-steps="8"] li {
+    width: 12%;
+  }
+
+  ol.progtrckr[data-progtrckr-steps="9"] li {
+    width: 11%;
+  }
+
+  ol.progtrckr li.progtrckr-done {
     color: black;
     border-bottom: 4px solid yellowgreen;
-}
-ol.progtrckr li.progtrckr-todo {
+  }
+
+  ol.progtrckr li.progtrckr-todo {
     color: silver;
     border-bottom: 4px solid silver;
-}
+  }
 
-ol.progtrckr li:after {
+  ol.progtrckr li:after {
     content: "\00a0\00a0";
-}
-ol.progtrckr li:before {
+  }
+
+  ol.progtrckr li:before {
     position: relative;
     bottom: -2.5em;
     float: left;
     left: 50%;
     line-height: 1em;
-}
-ol.progtrckr li.progtrckr-done:before {
+  }
+
+  ol.progtrckr li.progtrckr-done:before {
     content: "\2713";
     color: white;
     background-color: yellowgreen;
@@ -52,117 +76,169 @@ ol.progtrckr li.progtrckr-done:before {
     line-height: 2.2em;
     border: none;
     border-radius: 2.2em;
-}
-ol.progtrckr li.progtrckr-todo:before {
+  }
+
+  ol.progtrckr li.progtrckr-todo:before {
     content: "\039F";
     color: silver;
     background-color: white;
     font-size: 2.2em;
     bottom: -1.2em;
-}
-
-
+  }
 </style>
-{% for message in messages %}
-    <div class="sufee-alert alert with-close alert-primary alert-dismissible fade show">   {{message}}
-    <button class="close" aria-label="Close" type="button" data-dismiss="alert"><span aria-hidden="true">×</span></button>
-    </div>
+{% endblock %} {% block body %} {% for message in messages %}
+<div
+  class="sufee-alert alert with-close alert-primary alert-dismissible fade show"
+>
+  {{message}}
+  <button class="close" aria-label="Close" type="button" data-dismiss="alert">
+    <span aria-hidden="true">x</span>
+  </button>
+</div>
 {% endfor %}
-
-<h2 align="center">My Orders</h2>
-<table border="2" width="1000" align="center">
-    <tr><th>IMAGE</th><th>NAME</th><th>QTY</th><th>PRICE</th><th>TOTAL</th><th>STATUS</th><th>CANCEL</th></tr>
-{% for i in data %}
+<div class="container">
+  <h2 align="center">My Orders</h2>
+  <table border="2" width="100%" align="center">
     <tr>
-        <td><img src="{{i.image.url}}" width="100" height="100"></td>
-        <td>{{i.name}}</td>
-        <td>{{i.qty}}</td>
-        <td>{{i.price}}</td>
-        <td>{{i.total}}</td>
-        <td>{{i.status}}</td>
-        <td><form method="post" action="../orders/myorders">
-            {% csrf_token %}
-            {% if i.status != "order cancelled" %}
-            {% if i.status != "return acepted" %}
-            {% if i.status != "refunded" %}
-            <button type="submit" name="delete" value="{{i.id}}" >Cancel Order</button>
-            {% endif %}
-            {% endif %}
-            {% endif %}
-        </form></td>
+      <th>IMAGE</th>
+      <th>NAME</th>
+      <th>QTY</th>
+      <th>PRICE</th>
+      <th>TOTAL</th>
+      <th>STATUS</th>
+      <th>CANCEL</th>
+    </tr>
+    {% for i in data %}
+    <tr>
+      <td><img src="{{i.item.image.url}}" width="100" height="100" /></td>
+      <td>{{i.item.name}}</td>
+      <td>{{i.quantity}}</td>
+      <td>{{i.item.price}}</td>
+      <td>{{i.get_total_item_price}}</td>
+      <td>{{i.orders.order_status}}</td>
+      <td>
+        <form method="post" action="../orders/myorders">
+          {% csrf_token %} {% if i.order.order_status != "order cancelled" %} {%
+          if i.order.order_status != "return acepted" %} {% if
+          i.order.order_status != "refunded" %}
+          <button type="submit" name="delete" value="{{i.id}}">
+            Cancel Order
+          </button>
+          {% endif %} {% endif %} {% endif %}
+        </form>
+      </td>
     </tr>
     <tr>
-        <td colspan="7">
-        <ol class="progtrckr" data-progtrckr-steps="6">
-            {% if i.status == "orderd" %}
-<li class="progtrckr-todo">Order Acepted</li><!--
- --><li class="progtrckr-todo">Packed</li><!--
- --><li class="progtrckr-todo">Shipped</li><!--
- --><li class="progtrckr-todo">Delivered</li><!--
-  --><li class="progtrckr-todo">Return</li><!--
- --><li class="progtrckr-todo">Refunded</li>
-            {% endif %}
-            {% if i.status == "acepted" %}
-<li class="progtrckr-done">Order Acepted</li><!--
- --><li class="progtrckr-todo">Packed</li><!--
- --><li class="progtrckr-todo">Shipped</li><!--
- --><li class="progtrckr-todo">Delivered</li><!--
-  --><li class="progtrckr-todo">Return</li><!--
- --><li class="progtrckr-todo">Refunded</li>
-            {% endif %}
-            {% if i.status == "packed" %}
-<li class="progtrckr-done">Order Acepted</li><!--
- --><li class="progtrckr-done">Packed</li><!--
- --><li class="progtrckr-todo">Shipped</li><!--
- --><li class="progtrckr-todo">Delivered</li><!--
-  --><li class="progtrckr-todo">Return</li><!--
- --><li class="progtrckr-todo">Refunded</li>
-            {% endif %}
-            {% if i.status == "shipped" %}
-<li class="progtrckr-done">Order Acepted</li><!--
- --><li class="progtrckr-done">Packed</li><!--
- --><li class="progtrckr-done">Shipped</li><!--
- --><li class="progtrckr-todo">Delivered</li><!--
-  --><li class="progtrckr-todo">Return</li><!--
- --><li class="progtrckr-todo">Refunded</li>
-            {% endif %}
-            {% if i.status == "deliverd" %}
-<li class="progtrckr-done">Order Acepted</li><!--
- --><li class="progtrckr-done">Packed</li><!--
- --><li class="progtrckr-done">Shipped</li><!--
- --><li class="progtrckr-done">Delivered</li><!--
-  --><li class="progtrckr-todo">Return</li><!--
- --><li class="progtrckr-todo">Refunded</li>
-            {% endif %}
-            {% if i.status == "order cancelled" %}
-<li class="progtrckr-done">Order Acepted</li><!--
- --><li class="progtrckr-done">Packed</li><!--
- --><li class="progtrckr-done">Shipped</li><!--
- --><li class="progtrckr-done">Delivered</li><!--
-  --><li class="progtrckr-todo">Return</li><!--
- --><li class="progtrckr-todo">Refunded</li>
-            {% endif %}
-            {% if i.status == "return acepted" %}
-<li class="progtrckr-done">Order Acepted</li><!--
- --><li class="progtrckr-done">Packed</li><!--
- --><li class="progtrckr-done">Shipped</li><!--
- --><li class="progtrckr-done">Delivered</li><!--
-  --><li class="progtrckr-done">Return</li><!--
- --><li class="progtrckr-todo">Refunded</li>
-            {% endif %}
-            {% if i.status == "refunded" %}
-<li class="progtrckr-done">Order Acepted</li><!--
- --><li class="progtrckr-done">Packed</li><!--
- --><li class="progtrckr-done">Shipped</li><!--
- --><li class="progtrckr-done">Delivered</li><!--
-  --><li class="progtrckr-done">Return</li><!--
- --><li class="progtrckr-done">Refunded</li>
-            {% endif %}
-</ol>
-        </td>
+      <td colspan="7">
+        <ol class="progtrckr mb-" data-progtrckr-steps="6">
+          {% if i.order.order_status == "Process" %}
+          <li id="process" class="progtrckr-done">Order in Process</li>
+          <!--
+ -->
+          <li id="success" class="progtrckr-done">Payment Success</li>
+          <!--
+ -->
+          <li id="shipped" class="progtrckr-todo">Shipped</li>
+          <!--
+ -->
+          <li id="deliverd" class="progtrckr-todo">Delivered</li>
+          <!--
+  -->
+          <li id="canceled" class="progtrckr-todo">order cancelled</li>
+          <!--
+ -->
+          <li id="refunded" class="progtrckr-todo">Refunded</li>
+          {% endif %} {% if i.order.order_status == "Payment Success" %}
+          <li id="process" class="progtrckr-done">Order in Process</li>
+          <!--
+ -->
+          <li id="success" class="progtrckr-done">Payment Success</li>
+          <!--
+ -->
+          <li id="shipped" class="progtrckr-todo">Shipped</li>
+          <!--
+ -->
+          <li id="deliverd" class="progtrckr-todo">Delivered</li>
+          <!--
+  -->
+          <li id="canceled" class="progtrckr-todo">order cancelled</li>
+          <!--
+ -->
+          <li id="refunded" class="progtrckr-todo">Refunded</li>
+          {% endif %} {% if i.order.order_status == "Payment Success" %}
+          <li id="process" class="progtrckr-done">Order in Process</li>
+          <!--
+ -->
+          <li id="success" class="progtrckr-done">Payment Success</li>
+          <!--
+ -->
+          <li id="shipped" class="progtrckr-todo">Shipped</li>
+          <!--
+ -->
+          <li id="deliverd" class="progtrckr-todo">Delivered</li>
+          <!--
+  -->
+          <li id="canceled" class="progtrckr-todo">order cancelled</li>
+          <!--
+ -->
+          <li id="refunded" class="progtrckr-todo">Refunded</li>
+          {% endif %} {% if i.order.order_status == "Shipped" %}
+          <li id="process" class="progtrckr-done">Order in Process</li>
+          <!--
+ -->
+          <li id="success" class="progtrckr-done">Payment Success</li>
+          <!--
+ -->
+          <li id="shipped" class="progtrckr-todo">Shipped</li>
+          <!--
+ -->
+          <li id="deliverd" class="progtrckr-todo">Delivered</li>
+          <!--
+  -->
+          <li id="canceled" class="progtrckr-todo">order cancelled</li>
+          <!--
+ -->
+          <li id="refunded" class="progtrckr-todo">Refunded</li>
+          {% endif %} {% if i.order.order_status == "Deliverd" %}
+          <li id="process" class="progtrckr-done">Order in Process</li>
+          <!--
+ -->
+          <li id="success" class="progtrckr-done">Payment Success</li>
+          <!--
+ -->
+          <li id="shipped" class="progtrckr-todo">Shipped</li>
+          <!--
+ -->
+          <li id="deliverd" class="progtrckr-todo">Delivered</li>
+          <!--
+  -->
+          <li id="canceled" class="progtrckr-todo">order cancelled</li>
+          <!--
+ -->
+          <li id="refunded" class="progtrckr-todo">Refunded</li>
+          {% endif %} {% if i.order.order_status == "order cancelled" %}
+          <li id="process" class="progtrckr-done">Order in Process</li>
+          <!--
+ -->
+          <li id="success" class="progtrckr-done">Payment Success</li>
+          <!--
+ -->
+          <li id="shipped" class="progtrckr-todo">Shipped</li>
+          <!--
+ -->
+          <li id="deliverd" class="progtrckr-todo">Delivered</li>
+          <!--
+  -->
+          <li id="canceled" class="progtrckr-todo">order cancelled</li>
+          <!--
+ -->
+          <li id="refunded" class="progtrckr-todo">Refunded</li>
+          {% endif %}
+        </ol>
+      </td>
     </tr>
-{% endfor %}
-
-</table>
-<br><br>
+    {% endfor %}
+  </table>
+</div>
+<br /><br />
 {% endblock %}
